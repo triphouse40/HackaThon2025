@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
+from pythDB import accounts
 
 # Create an instance of the Flask class
 app = Flask(__name__)
@@ -16,7 +17,7 @@ def init_db():
             "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL)"
         )
         conn.execute("CREATE TABLE IF NOT EXISTS account (user_id INTEGER NOT NULL, accountName TEXT, amount INTEGER, accessDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)")
-
+        conn.execute("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, accountName TEXT NOT NULL, type TEXT NOT NULL, amount REAL NOT NULL, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);")
 
 # Function to create users
 def create_user(username, password):
@@ -63,10 +64,15 @@ def account(username):
         row = cur.fetchone()
         return row
 
-# Define a route for the root URL ("/")
-@app.route("/")
+# Home pageL ("/")
+@app.route("/", methods=["GET", "POST"])
 def hello_world():
+    if request.method == "POST":
+        accounts.add_money(session["user_id"], "Savings", 500, dataB)
+        return redirect("/")
+
     balanceInfo = account(session["username"])
+    print(str(session))
     return render_template("home.html", session=session, balanceInfo=balanceInfo)
 
 @app.route("/registar", methods=["GET", "POST"])
@@ -97,6 +103,19 @@ def login():
         return "Invalid username or password", 400
     return render_template("login.html")
 
+# Function for adding money in
+@app.route("/add_money", methods=["POST"])
+def MoneyIn():
+    depositMoney = request.form["amount"]
+    accounts.add_money(session["user_id"], "Savings", int(depositMoney), dataB)
+    return redirect("/")
+
+# Function for taking money out
+@app.route("/withdraw_money", methods=["POST"])
+def MoneyOut():
+    depositMoney = request.form["amount"]
+    accounts.withdraw_money(session["user_id"], "Savings", int(depositMoney), dataB)
+    return redirect("/")
 
 @app.route("/logout")
 def logout():

@@ -1,22 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <!-- For current user -->
-  {% if session.get("user_id") %}
-  <div class="grid grid-cols-2 pt-8 pr-12">
-    <div class="">Welcome to your MoneyTalks account overview, {{ session["username"] }}!</div>
+{% if session.get("user_id") %}
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-gray-50 rounded-2xl shadow-md">
 
-    <div class="text-end rounded-l">
-      Balance R{{ balanceInfo[3] }}
+    <!-- Header -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="text-gray-700 font-medium">
+            Welcome to your MoneyTalks account overview, {{ session["username"] }}!
+        </div>
+        <div class="text-right text-gray-800 font-semibold">
+            Balance R{{ balanceInfo[3] }}
+        </div>
     </div>
-  </div>
 
+    <!-- Deposit Form -->
+    <form action="add_money" method="POST" class="space-y-4 bg-white p-4 rounded-xl shadow-sm">
+        <h3 class="text-gray-800 font-semibold mb-2">Deposit Money</h3>
+        <div>
+            <label for="account_name_deposit" class="block text-sm font-medium text-gray-600">Account Name</label>
+            <input type="text" name="account_name" id="account_name_deposit"
+                class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+                placeholder="Enter account name" required>
+        </div>
+        <div>
+            <label for="deposit_amount" class="block text-sm font-medium text-gray-600">Deposit Amount</label>
+            <input type="number" name="amount" id="deposit_amount" step="0.01"
+                class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+                placeholder="Enter amount" required>
+        </div>
+        <button type="submit" 
+            class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400">
+            Deposit Money
+        </button>
+    </form>
 
+    <!-- Withdraw Form -->
+    <form action="/withdraw_money" method="POST" class="space-y-4 bg-white p-4 rounded-xl shadow-sm mt-6">
+        <h3 class="text-gray-800 font-semibold mb-2">Withdraw Money</h3>
+        <div>
+            <label for="account_name_withdraw" class="block text-sm font-medium text-gray-600">Account Name</label>
+            <input type="text" name="account_name" id="account_name_withdraw"
+                class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+                placeholder="Enter account name" required>
+        </div>
+        <div>
+            <label for="withdraw_amount" class="block text-sm font-medium text-gray-600">Withdraw Amount</label>
+            <input type="number" name="amount" id="withdraw_amount" step="0.01"
+                class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+                placeholder="Enter amount" required>
+        </div>
+        <button type="submit"
+            class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400">
+            Withdraw Money
+        </button>
+    </form>
 
+</div>
 
-    <!-- For when there is no user logged in -->
-  {% else %}
-    <h2>Welcome!</h2>
-    <p>Please <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a>.</p>
-  {% endif %}
+{% else %}
+<div class="max-w-2xl mx-auto mt-10 p-6 bg-gray-50 rounded-2xl shadow-md text-center text-gray-700">
+    <h2 class="text-xl font-semibold mb-4">Welcome!</h2>
+    <p>Please <a href="{{ url_for('login') }}" class="text-gray-800 underline">login</a> or <a href="{{ url_for('register') }}" class="text-gray-800 underline">register</a>.</p>
+</div>
+{% endif %}
+
 {% endblock %}
