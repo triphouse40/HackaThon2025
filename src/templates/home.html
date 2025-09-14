@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <!-- For current user -->
+  {% if session.get("user_id") %}
+    <h2>Welcome, {{ session["username"] }}!</h2>
+    <p>You are logged in. <a href="{{ url_for('logout') }}">Logout</a></p>
+
+
+
+
+
+    <!-- For when there is no user logged in -->
+  {% else %}
+    <h2>Welcome!</h2>
+    <p>Please <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a>.</p>
+  {% endif %}
+{% endblock %}
