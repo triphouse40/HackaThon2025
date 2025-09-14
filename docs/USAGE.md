@@ -20,13 +20,20 @@ npm start
 2. Step 2 -> Then this
 3. Step 3 -> See the output/result
 
+1. Register a User
+2. Login with User
+3. Increase your virtual balance with some money
+4. Optional - Choose to withdraw or add money to ur liking. The more you do the better the AI will respond
+5. Check History page
+6. Analyse then that's it...
+
 ## 🎥 Demo
 ``` c
 // TODO: Link your demo video and PowerPoint here
 ```
 Check out the Demos: 
-- [Demo Video](../demo/demo.mp4)
-- [Demo Presentation](../demo/demo.pptx)
+- [Demo Video](/demo/demo%20video.mp4)
+- [Demo Presentation](/demo/MoneyTalks%20Presentation.pptx)
 
 ## 📌 Notes
 ``` c

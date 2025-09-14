@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>MoneyTalks</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>MoneyTalks</title>
 </head>
-<body class="bg-gray-50">
-    <header class="bg-gray-200 grid grid-cols-3 ">
-        <span class="text-4xl text-bold">Money Talks</span>
-        <nav class=" text-center">
-            {% if session.get("user_id") %}
-                <span class="text-center text-3xl text-bold text-slate-950">Hi, {{ session["username"] }}</span>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 grid grid-cols-3 items-center">
+      
+      <!-- Left: Logo -->
+      <div>
+        <a href="/" class="text-2xl font-bold text-gray-800 tracking-tight">
+          Money<span class="text-green-500">Talks</span>
+        </a>
+      </div>
 
-            {% else %}
-                <a href="/login">Login</a>
-                <a href="/registar">Register</a>
-            {% endif %}
-        </nav>
-        <nav class="text-end space-x-4 pr-8 text-3xl">
-            {% if session.get("user_id") %}
-                <a href="/" class="">Home</a>
-                <a href="/logout">Logout</a>
-            {% endif %}
-        </nav>
-    </header>
+      <!-- Center: Greeting or Links -->
+      <div class="text-center">
+        {% if session.get("user_id") %}
+          <span class="text-lg font-medium text-gray-700">Hi, {{ session["username"] }}</span>
+        {% else %}
+          <a href="/login" class="text-gray-600 hover:text-gray-900 mx-2">Login</a>
+          <a href="/registar" class="text-gray-600 hover:text-gray-900 mx-2">Register</a>
+        {% endif %}
+      </div>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+      <!-- Right: Navigation -->
+      <nav class="text-right space-x-6">
+        {% if session.get("user_id") %}
+          <a href="/" class="text-gray-600 hover:text-gray-900 font-medium">Home</a>
+          <a href="/History" class="text-gray-600 hover:text-gray-900 font-medium">History</a>
+          <a href="/logout" class="text-gray-600 hover:text-gray-900 font-medium">Logout</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    {% block content %}{% endblock %}
+  </main>
 </body>
 </html>

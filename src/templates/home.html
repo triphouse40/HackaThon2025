@@ -37,24 +37,51 @@
 
     <!-- Withdraw Form -->
     <form action="/withdraw_money" method="POST" class="space-y-4 bg-white p-4 rounded-xl shadow-sm mt-6">
-        <h3 class="text-gray-800 font-semibold mb-2">Withdraw Money</h3>
-        <div>
-            <label for="account_name_withdraw" class="block text-sm font-medium text-gray-600">Account Name</label>
-            <input type="text" name="account_name" id="account_name_withdraw"
-                class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
-                placeholder="Enter account name" required>
-        </div>
-        <div>
-            <label for="withdraw_amount" class="block text-sm font-medium text-gray-600">Withdraw Amount</label>
-            <input type="number" name="amount" id="withdraw_amount" step="0.01"
-                class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
-                placeholder="Enter amount" required>
-        </div>
-        <button type="submit"
-            class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400">
-            Withdraw Money
-        </button>
-    </form>
+  <h3 class="text-gray-800 font-semibold mb-2">Withdraw Money</h3>
+  
+  <!-- Account Name -->
+  <div>
+    <label for="account_name_withdraw" class="block text-sm font-medium text-gray-600">Account Name</label>
+    <input type="text" name="account_name" id="account_name_withdraw"
+      class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 
+             focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+      placeholder="Enter account name" required>
+  </div>
+
+  <!-- Amount -->
+  <div>
+    <label for="withdraw_amount" class="block text-sm font-medium text-gray-600">Withdraw Amount</label>
+    <input type="number" name="amount" id="withdraw_amount" step="0.01"
+      class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 
+             focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+      placeholder="Enter amount" required>
+  </div>
+
+  <!-- Company (Optional) -->
+  <div>
+    <label for="withdraw_company" class="block text-sm font-medium text-gray-600">Company (Optional)</label>
+    <input type="text" name="company" id="withdraw_company"
+      class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 
+             focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+      placeholder="e.g. Pick n Pay">
+  </div>
+
+  <!-- Item (Optional) -->
+  <div>
+    <label for="withdraw_item" class="block text-sm font-medium text-gray-600">Item (Optional)</label>
+    <input type="text" name="item" id="withdraw_item"
+      class="mt-1 block w-full rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700 
+             focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 sm:text-sm"
+      placeholder="e.g. Groceries">
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit"
+    class="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium 
+           rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400">
+    Withdraw Money
+  </button>
+</form>
 
 </div>
 

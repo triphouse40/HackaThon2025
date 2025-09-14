@@ -15,6 +15,7 @@ This document lists all **third-party repositories, modules, libraries, framewor
 |----------------------|-------------------------------------------------------|-----------------|------------------------|
 | IntricatePointers    | https://github.com/DnA-IntRicate/IntricatePointers    | Adam Foflonker  | Memory management      |
 | fast_obj             | https://github.com/thisistherk/fast_obj               | Richard Knight  | Parsing OBJ files      |
+| Flask                | https://flask.palletsprojects.com/en/stable/          | Python Devs
 
 ---
 
@@ -23,6 +24,7 @@ This document lists all **third-party repositories, modules, libraries, framewor
 |---------------|------------------------------------|----------------|-----------------------------------|
 | OpenWeather   | https://openweathermap.org/api     | Open Weather   | Fetching weather data             |
 | Stripe        | https://stripe.com/docs/api        | Stripe         | Payment handling                  |
+| OpenAI        | https://openai.com/index/openai-api| OpenAI         | AI responses
 
 ---
 

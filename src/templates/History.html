@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Account History & Insights</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Transactions Table -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow">
+        <h3 class="text-xl font-semibold text-gray-700 mb-3">Transaction History</h3>
+        <table class="w-full border-collapse border border-gray-200 text-sm">
+          <thead class="bg-gray-100 text-left">
+            <tr>
+                <th class="p-2 border">Type</th>
+                <th class="p-2 border">Amount</th>
+                <th class="p-2 border">Company</th>
+                <th class="p-2 border">Item</th>
+                <th class="p-2 border">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for t in transactions %}
+            <tr class="hover:bg-gray-50">
+                <td class="p-2 border">{{ t[0] }}</td>
+                <td class="p-2 border">R{{ t[1] }}</td>
+                <td class="p-2 border">{{ t[2] or "-" }}</td>
+                <td class="p-2 border">{{ t[3] or "-" }}</td>
+                <td class="p-2 border">{{ t[4] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+
+      <!-- AI Insights -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow">
+        <h3 class="text-xl font-semibold text-gray-700 mb-3">AI Insights</h3>
+        <ul class="space-y-4">
+          {% for q, a in ai_answers %}
+          <li class="p-3 border-l-4 border-green-500 bg-white rounded shadow-sm">
+            <p class="text-gray-800 font-medium">{{ q }}</p>
+            <p class="text-gray-600">{{ a }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -3,11 +3,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
 from pythDB import accounts
+from openai import OpenAI
 
 # Create an instance of the Flask class
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Just a random secret key
 
+client = OpenAI(api_key="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")
+
+# The database
 dataB = "Database/users.db"
 
 # Function to create a users table in the database
@@ -18,6 +22,7 @@ def init_db():
         )
         conn.execute("CREATE TABLE IF NOT EXISTS account (user_id INTEGER NOT NULL, accountName TEXT, amount INTEGER, accessDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)")
         conn.execute("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, accountName TEXT NOT NULL, type TEXT NOT NULL, amount REAL NOT NULL, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);")
+
 
 # Function to create users
 def create_user(username, password):
@@ -65,14 +70,10 @@ def account(username):
         return row
 
 # Home pageL ("/")
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def hello_world():
-    if request.method == "POST":
-        accounts.add_money(session["user_id"], "Savings", 500, dataB)
-        return redirect("/")
 
     balanceInfo = account(session["username"])
-    print(str(session))
     return render_template("home.html", session=session, balanceInfo=balanceInfo)
 
 @app.route("/registar", methods=["GET", "POST"])
@@ -113,9 +114,57 @@ def MoneyIn():
 # Function for taking money out
 @app.route("/withdraw_money", methods=["POST"])
 def MoneyOut():
-    depositMoney = request.form["amount"]
-    accounts.withdraw_money(session["user_id"], "Savings", int(depositMoney), dataB)
+    amount = request.form.get("amount")
+    company = request.form.get("company")
+    item = request.form.get("item")
+
+    try:
+        amount = float(amount)
+    except ValueError:
+        return "Invalid amount", 400
+
+    success = accounts.withdraw_money(
+        user_id=session["user_id"],
+        amount=amount,
+        database=dataB,
+        company=company,
+        item=item
+    )
+
+    if not success:
+        return "Withdrawal failed", 400
+
     return redirect("/")
+
+
+
+# Function for viewing transactions and deposits 
+@app.route("/History")
+def MoneyHistory():
+    transactions = accounts.get_transaction_history(session["user_id"], dataB)
+
+
+    # This part is AI generated, 1st time using it so pls excuse# Format transactions for AI
+    tx_text = "\n".join([f"{t[2]} - {t[0]} R{t[1]}" for t in transactions])
+
+    # Pre-set questions
+    questions = [
+        "Where was my money spent.",
+        "What advice can you give me based on my transactions?"
+    ]
+
+    ai_answers = []
+    for q in questions:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a financial friend. Be surprised and friendly. Use 2 to 3 sentences"},
+                {"role": "user", "content": f"My transactions:\n{tx_text}\n\nQuestion: {q}"}
+            ]
+        )
+        ai_answers.append((q, response.choices[0].message.content))
+    return render_template("History.html", transactions=transactions, ai_answers=ai_answers)
+
 
 @app.route("/logout")
 def logout():
