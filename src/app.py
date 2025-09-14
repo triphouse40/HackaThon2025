@@ -52,13 +52,22 @@ def get_user(username):
         return row 
 
 # Functionto get account info 
-def  account():
-    pass
+def account(username):
+    with sqlite3.connect(dataB) as conn:
+        cur = conn.execute("""
+            SELECT u.id, u.username, a.accountName, a.amount, a.accessDate
+            FROM users u
+            JOIN account a ON u.id = a.user_id
+            WHERE u.username = ?
+        """, (username,))
+        row = cur.fetchone()
+        return row
 
 # Define a route for the root URL ("/")
 @app.route("/")
 def hello_world():
-    return render_template("base.html")
+    balanceInfo = account(session["username"])
+    return render_template("home.html", session=session, balanceInfo=balanceInfo)
 
 @app.route("/registar", methods=["GET", "POST"])
 def register():

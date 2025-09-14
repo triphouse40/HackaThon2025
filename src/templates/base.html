@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Document</title>
+    <title>MoneyTalks</title>
 </head>
 <body class="bg-gray-50">
-    <header class="bg-gray-200">
+    <header class="bg-gray-200 grid grid-cols-3 ">
         <span class="text-4xl text-bold">Money Talks</span>
-        <nav>
-            <a href="/">Home</a>
+        <nav class=" text-center">
             {% if session.get("user_id") %}
-                <span>Hi, {{ session["username"] }}!</span>
-                <a href="/logout">Logout</a>
+                <span class="text-center text-3xl text-bold text-slate-950">Hi, {{ session["username"] }}</span>
+
             {% else %}
                 <a href="/login">Login</a>
                 <a href="/registar">Register</a>
+            {% endif %}
+        </nav>
+        <nav class="text-end space-x-4 pr-8 text-3xl">
+            {% if session.get("user_id") %}
+                <a href="/" class="">Home</a>
+                <a href="/logout">Logout</a>
             {% endif %}
         </nav>
     </header>

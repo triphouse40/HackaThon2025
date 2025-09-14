@@ -3,9 +3,13 @@
 
     <!-- For current user -->
   {% if session.get("user_id") %}
-    <h2>Welcome, {{ session["username"] }}!</h2>
-    <p>You are logged in. <a href="{{ url_for('logout') }}">Logout</a></p>
+  <div class="grid grid-cols-2 pt-8 pr-12">
+    <div class="">Welcome to your MoneyTalks account overview, {{ session["username"] }}!</div>
 
+    <div class="text-end rounded-l">
+      Balance R{{ balanceInfo[3] }}
+    </div>
+  </div>
 
 
 
