@@ -9,8 +9,9 @@ from openai import OpenAI
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Just a random secret key
 
-client = OpenAI(api_key="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")
-
+# Get an API KEY FIRST BEFORE RUNNING
+client = OpenAI(api_key="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"
+)
 # The database
 dataB = "Database/users.db"
 
@@ -72,7 +73,8 @@ def account(username):
 # Home pageL ("/")
 @app.route("/")
 def hello_world():
-
+    if "username" not in session:
+        return redirect("/login")  # send to login if not logged in
     balanceInfo = account(session["username"])
     return render_template("home.html", session=session, balanceInfo=balanceInfo)
 
@@ -177,4 +179,5 @@ if __name__ == "__main__":
     # create a demo account once
     if not get_user("Bruno"):
         create_user("Bruno", "Mota")
+
     app.run(debug=True) 
